@@ -6,6 +6,9 @@ Pre-built server-side daemon for the **Mole** SOCKS5 + DNS transparent proxy sui
 
 ---
 
+
+> **[View full documentation on the Codex Wiki](https://wiki.pr0t31n.com/tools/mole-server)** — detailed features, CLI reference, findings catalogue, and integration guides.
+
 ## How It Fits Together
 
 ```
