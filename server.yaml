@@ -1,5 +1,5 @@
 # =============================================================================
-# ProxySuite Server — Configuration File
+# Mole Server — Configuration File
 # =============================================================================
 #
 # Default location: /etc/proxysuite/server-config.yaml
@@ -58,6 +58,47 @@ auth:
 #   "208.67.222.222:53" — OpenDNS
 #
 upstream_dns: "1.1.1.1:53"
+
+
+# ── Health Check ───────────────────────────────────────────────────────────────
+#
+# Periodically probes critical endpoints to verify the server has working
+# internet access, GitHub connectivity, and package manager access.
+#
+# When a check FAILS:
+#   - All active client connections are killed immediately
+#   - New client connections are rejected
+#   - Clients are forced to fail over to another healthy server
+#
+# When health is RESTORED:
+#   - New client connections are accepted again
+#
+# Critical endpoints (always tested):
+#   - Internet: 1.1.1.1:80 (Cloudflare), 8.8.8.8:53 (Google DNS)
+#   - GitHub: github.com:443
+#
+# Non-critical endpoints (tested but won't trigger unhealthy alone):
+#   - Ubuntu APT: archive.ubuntu.com:80, security.ubuntu.com:80
+#   - Kali APT: http.kali.org:80
+#   - Homebrew: formulae.brew.sh:443
+#
+health_check:
+  # Enable or disable health checking. Default: true.
+  enabled: true
+
+  # How often (minutes) to run health checks. Default: 90 (1.5 hours).
+  interval_min: 90
+
+  # TCP connect timeout (seconds) for each probe. Default: 10.
+  timeout_sec: 10
+
+  # Additional endpoints to probe (non-critical). Format: "host:port".
+  # The default set above is always included.
+  targets: []
+  # Example:
+  # targets:
+  #   - "pypi.org:443"
+  #   - "registry.npmjs.org:443"
 
 
 # ── Logging ────────────────────────────────────────────────────────────────────
